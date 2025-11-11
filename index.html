@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💒 Joe's Wedding! 💒</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- TOP BAR WITH MARQUEE -->
+    <div class="top-bar">
+        <marquee behavior="scroll" direction="left">💐 Welcome to Joe and Liz's Wedding Website! 💐 Save the Date! 💐</marquee>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <h1>💒 Joe & Liz's Wedding 💒</h1>
+        <p class="tagline">~* You're Invited! *~</p>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#home">Home</a> |
+        <a href="#details">Details</a> |
+        <a href="#rsvp">RSVP</a> |
+        <a href="#registry">Registry</a> |
+        <a href="#photos">Photos</a> |
+        <a href="#travel">Travel</a>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar-left">
+            <div class="sidebar-box">
+                <h3>✨ Quick Links ✨</h3>
+                <ul>
+                    <li><a href="#details">Event Details</a></li>
+                    <li><a href="#rsvp">RSVP Here</a></li>
+                    <li><a href="#registry">Gift Registry</a></li>
+                    <li><a href="#travel">Hotels & Travel</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-box">
+                <h3>💕 The Couple 💕</h3>
+                <p style="text-align: center;">
+                    <strong>Joe & Liz</strong><br>
+                    Getting Hitched!<br>
+                    <span class="blink">★</span>
+                </p>
+            </div>
+
+            <div class="sidebar-box">
+                <h3>📅 Save the Date</h3>
+                <p style="text-align: center;">
+                    <strong>June 15, 2026</strong><br>
+                    3:00 PM<br>
+                    <em>Mark your calendars!</em>
+                </p>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content">
+            
+            <!-- HOME SECTION -->
+            <section id="home">
+                <div class="content-box">
+                    <h2>💐 Welcome! 💐</h2>
+                    <p>
+                        Hey there! We're so excited to celebrate our special day with you. 
+                        This website has all the info you need about our wedding.
+                    </p>
+                    <p>
+                        Browse around to find details about the ceremony, reception, travel information, 
+                        and more. Don't forget to RSVP!
+                    </p>
+                    <center>
+                        <p>───────────── ✧ ─────────────</p>
+                        <p><em>"Love is patient, love is kind..." - 1 Corinthians 13:4</em></p>
+                        <p>───────────── ✧ ─────────────</p>
+                    </center>
+                </div>
+            </section>
+
+            <!-- DETAILS SECTION -->
+            <section id="details">
+                <div class="content-box">
+                    <h2>📍 Wedding Details</h2>
+                    
+                    <h3>🎊 Ceremony</h3>
+                    <p>
+                        <strong>Date:</strong> Saturday, June 15, 2026<br>
+                        <strong>Time:</strong> 3:00 PM<br>
+                        <strong>Location:</strong> Terrell Farm<br>
+                        <strong>Address:</strong> High Point, NC
+                    </p>
+
+                    <h3>🎉 Reception</h3>
+                    <p>
+                        <strong>Time:</strong> 5:00 PM - 11:00 PM<br>
+                        <strong>Location:</strong> Same Location<br>
+                        Dinner, dancing, and celebration to follow!
+                    </p>
+
+                    <h3>👔 Dress Code</h3>
+                    <p>
+                        Semi-formal / Cocktail Attire<br>
+                    </p>
+                </div>
+            </section>
+
+            <!-- RSVP SECTION -->
+            <section id="rsvp">
+                <div class="content-box">
+                    <h2>💌 RSVP</h2>
+                    <p>
+                        Please let us know if you can make it! RSVP by <strong>April 15, 2026</strong>.
+                    </p>
+                    
+                    <!-- Simple RSVP form -->
+                    <div class="form-container">
+                        <form id="rsvpForm">
+                            <label for="name">Your Name(s):</label><br>
+                            <input type="text" id="name" name="name" required><br><br>
+
+                            <label for="email">Email:</label><br>
+                            <input type="email" id="email" name="email" required><br><br>
+
+                            <label>Will you be attending?</label><br>
+                            <input type="radio" id="yes" name="attending" value="yes">
+                            <label for="yes">Yes, can't wait! 🎉</label><br>
+                            <input type="radio" id="no" name="attending" value="no">
+                            <label for="no">Sorry, can't make it 😢</label><br><br>
+
+                            <label for="guests">Number of Guests:</label><br>
+                            <input type="number" id="guests" name="guests" min="1" max="10" value="1"><br><br>
+
+                            <label for="message">Special Requests / Dietary Restrictions:</label><br>
+                            <textarea id="message" name="message" rows="4"></textarea><br><br>
+
+                            <button type="submit" class="submit-btn">Send RSVP ✨</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- REGISTRY SECTION -->
+            <section id="registry">
+                <div class="content-box">
+                    <h2>🎁 Gift Registry</h2>
+                    <p>
+                        Your presence is the best present! But if you'd like to give a gift, 
+                        we're registered at the following places:
+                    </p>
+                    <ul class="registry-list">
+                        <li>🏠 <a href="#" target="_blank">Target Registry</a></li>
+                        <li>🍽️ <a href="#" target="_blank">Williams Sonoma</a></li>
+                        <li>💰 <a href="#" target="_blank">Honeymoon Fund</a></li>
+                    </ul>
+                    <p>
+                        <em>Thank you so much for your generosity!</em>
+                    </p>
+                </div>
+            </section>
+
+            <!-- PHOTOS SECTION -->
+            <section id="photos">
+                <div class="content-box">
+                    <h2>📸 Photo Gallery</h2>
+                    <p>
+                        Check back after the wedding for photos! In the meantime, 
+                        here are some fun memories:
+                    </p>
+                    <div class="photo-grid">
+                        <div class="photo-placeholder">
+                            <p>Photo 1<br>💕</p>
+                        </div>
+                        <div class="photo-placeholder">
+                            <p>Photo 2<br>💕</p>
+                        </div>
+                        <div class="photo-placeholder">
+                            <p>Photo 3<br>💕</p>
+                        </div>
+                        <div class="photo-placeholder">
+                            <p>Photo 4<br>💕</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TRAVEL SECTION -->
+            <section id="travel">
+                <div class="content-box">
+                    <h2>✈️ Travel & Accommodations</h2>
+                    
+                    <h3>🏨 Recommended Hotels</h3>
+                    <p>
+                        We've reserved room blocks at the following hotels:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Hotel Name 1</strong><br>
+                            123 Hotel Street<br>
+                            (555) 123-4567<br>
+                            <em>Mention "Joe's Wedding" for group rate</em>
+                        </li>
+                        <li>
+                            <strong>Hotel Name 2</strong><br>
+                            456 Inn Avenue<br>
+                            (555) 987-6543<br>
+                            <em>Use code: WEDDING2026</em>
+                        </li>
+                    </ul>
+
+                    <h3>🚗 Getting There</h3>
+                    <p>
+                        <strong>From Airport:</strong> The venue is about 30 minutes from the airport.<br>
+                        <strong>Parking:</strong> Free parking available at the venue.<br>
+                        <strong>Rideshare:</strong> Uber and Lyft are available in the area.
+                    </p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="sidebar-right">
+            <div class="sidebar-box">
+                <h3>💌 Contact Us</h3>
+                <p>
+                    Questions?<br>
+                    Email us at:<br>
+                    <a href="mailto:joe@example.com">joe@example.com</a>
+                </p>
+            </div>
+
+            <div class="sidebar-box">
+                <h3>📱 Social Media</h3>
+                <p style="text-align: center;">
+                    Share your photos with<br>
+                    <strong>#JoeGetsMarried</strong>
+                </p>
+            </div>
+
+            <div class="sidebar-box">
+                <h3>🎵 Music Requests</h3>
+                <p>
+                    Got a song you want to hear at the reception? Let us know in your RSVP!
+                </p>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>
+            💕 Joe & Liz 💕<br>
+            June 15, 2026<br>
+            <em>Can't wait to celebrate with you!</em>
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
