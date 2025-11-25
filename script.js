@@ -310,16 +310,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // VISITOR COUNTER - Real global tracking
+    // VISITOR COUNTER - Global tracking via API with localStorage fallback
     const counterDigits = document.querySelectorAll('.counter-digit');
     
     if (counterDigits.length > 0) {
-        // Use CountAPI.xyz for real visitor counting across all visitors
-        const counterNamespace = 'joe-liz-wedding-2026';
-        const counterKey = 'visits';
-        const counterURL = `https://api.countapi.xyz/hit/${counterNamespace}/${counterKey}`;
-        
-        // Function to animate the counter with a given count
+        // Function to animate the counter
         function animateCounter(visitorCount) {
             const countString = visitorCount.toString().padStart(6, '0');
             
@@ -342,20 +337,45 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Try to fetch from API
-        fetch(counterURL)
-            .then(response => response.json())
-            .then(data => {
-                animateCounter(data.value);
-            })
-            .catch(error => {
-                console.log('Using localStorage fallback for local testing');
-                // Fallback to localStorage for local testing
-                let visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
-                visitorCount++;
-                localStorage.setItem('visitorCount', visitorCount.toString());
-                animateCounter(visitorCount);
-            });
+        // Using a reliable free counter service: visitor-badge API
+        // This service is actively maintained and provides simple REST API
+        const pageId = encodeURIComponent('joe-liz-wedding-2026');
+        const counterUrl = `https://visitor-badge.laobi.icu/badge?page_id=${pageId}&format=json`;
+        
+        fetch(counterUrl, {
+            method: 'GET'
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Service unavailable');
+            return response.text();
+        })
+        .then(text => {
+            // Try to parse as JSON
+            try {
+                const data = JSON.parse(text);
+                const count = parseInt(data.count || data.views || data.visitors || '1');
+                animateCounter(count);
+            } catch (e) {
+                // If not JSON, try to extract number from text/SVG
+                const match = text.match(/\d+/);
+                if (match) {
+                    animateCounter(parseInt(match[0]));
+                } else {
+                    throw new Error('Could not parse count');
+                }
+            }
+        })
+        .catch(error => {
+            // Fallback to localStorage if API is unavailable
+            console.log('Using localStorage for visitor count (API unavailable)');
+            let visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
+            visitorCount++;
+            localStorage.setItem('visitorCount', visitorCount.toString());
+            animateCounter(visitorCount);
+            
+            // For production: Consider setting up Google Analytics or similar
+            console.log('For accurate global tracking, consider Google Analytics or Plausible');
+        });
     }
     
 });
