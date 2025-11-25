@@ -533,6 +533,47 @@ footer p {
     margin: 5px 0;
 }
 
+/* VISITOR COUNTER */
+.visitor-counter {
+    margin-top: 20px;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #FFE4E1, #FFF0F5);
+    border: 3px solid #FFD700;
+    display: inline-block;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.visitor-counter p {
+    color: #FF1493;
+    font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    font-size: 1em;
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.counter-display {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.counter-digit {
+    background: linear-gradient(to bottom, #FFB6C1, #FF69B4);
+    color: #FFF;
+    font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 8px 12px;
+    border: 3px ridge #FFD700;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    min-width: 35px;
+    text-align: center;
+    border-radius: 3px;
+}
+
 /* RESPONSIVE DESIGN FOR MOBILE */
 @media (max-width: 768px) {
     .container {
@@ -696,6 +737,26 @@ footer p {
     
     .farm-overlay {
         padding: 20px;
+    }
+    
+    /* Visitor counter responsive */
+    .visitor-counter {
+        padding: 10px 15px;
+        max-width: 100%;
+    }
+    
+    .visitor-counter p {
+        font-size: 0.85em;
+    }
+    
+    .counter-display {
+        gap: 3px;
+    }
+    
+    .counter-digit {
+        font-size: 1.2em;
+        padding: 6px 8px;
+        min-width: 28px;
     }
 }
 

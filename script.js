@@ -310,6 +310,44 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // VISITOR COUNTER - Real tracking with localStorage
+    const counterDigits = document.querySelectorAll('.counter-digit');
+    
+    if (counterDigits.length > 0) {
+        // Get current count from localStorage (or start at 0)
+        let visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
+        
+        // Increment the count
+        visitorCount++;
+        
+        // Save back to localStorage
+        localStorage.setItem('visitorCount', visitorCount.toString());
+        
+        // Convert to string and pad with zeros if needed
+        const countString = visitorCount.toString().padStart(6, '0');
+        
+        // Animate each digit counting up
+        counterDigits.forEach((digit, index) => {
+            const finalDigit = parseInt(countString[index]);
+            let currentDigit = 0;
+            
+            // Random speed for each digit to make it look cooler
+            const speed = 50 + Math.random() * 100;
+            const iterations = 10 + Math.floor(Math.random() * 10);
+            
+            const interval = setInterval(() => {
+                currentDigit = Math.floor(Math.random() * 10);
+                digit.textContent = currentDigit;
+            }, speed);
+            
+            // Stop at the final digit after random time
+            setTimeout(() => {
+                clearInterval(interval);
+                digit.textContent = finalDigit;
+            }, speed * iterations);
+        });
+    }
+    
 });
 
 // Fun console message for curious visitors
