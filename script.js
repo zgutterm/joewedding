@@ -310,42 +310,52 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // VISITOR COUNTER - Real tracking with localStorage
+    // VISITOR COUNTER - Real global tracking
     const counterDigits = document.querySelectorAll('.counter-digit');
     
     if (counterDigits.length > 0) {
-        // Get current count from localStorage (or start at 0)
-        let visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
+        // Use CountAPI.xyz for real visitor counting across all visitors
+        const counterNamespace = 'joe-liz-wedding-2026';
+        const counterKey = 'visits';
+        const counterURL = `https://api.countapi.xyz/hit/${counterNamespace}/${counterKey}`;
         
-        // Increment the count
-        visitorCount++;
-        
-        // Save back to localStorage
-        localStorage.setItem('visitorCount', visitorCount.toString());
-        
-        // Convert to string and pad with zeros if needed
-        const countString = visitorCount.toString().padStart(6, '0');
-        
-        // Animate each digit counting up
-        counterDigits.forEach((digit, index) => {
-            const finalDigit = parseInt(countString[index]);
-            let currentDigit = 0;
+        // Function to animate the counter with a given count
+        function animateCounter(visitorCount) {
+            const countString = visitorCount.toString().padStart(6, '0');
             
-            // Random speed for each digit to make it look cooler
-            const speed = 50 + Math.random() * 100;
-            const iterations = 10 + Math.floor(Math.random() * 10);
-            
-            const interval = setInterval(() => {
-                currentDigit = Math.floor(Math.random() * 10);
-                digit.textContent = currentDigit;
-            }, speed);
-            
-            // Stop at the final digit after random time
-            setTimeout(() => {
-                clearInterval(interval);
-                digit.textContent = finalDigit;
-            }, speed * iterations);
-        });
+            counterDigits.forEach((digit, index) => {
+                const finalDigit = parseInt(countString[index]);
+                let currentDigit = 0;
+                
+                const speed = 50 + Math.random() * 100;
+                const iterations = 10 + Math.floor(Math.random() * 10);
+                
+                const interval = setInterval(() => {
+                    currentDigit = Math.floor(Math.random() * 10);
+                    digit.textContent = currentDigit;
+                }, speed);
+                
+                setTimeout(() => {
+                    clearInterval(interval);
+                    digit.textContent = finalDigit;
+                }, speed * iterations);
+            });
+        }
+        
+        // Try to fetch from API
+        fetch(counterURL)
+            .then(response => response.json())
+            .then(data => {
+                animateCounter(data.value);
+            })
+            .catch(error => {
+                console.log('Using localStorage fallback for local testing');
+                // Fallback to localStorage for local testing
+                let visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
+                visitorCount++;
+                localStorage.setItem('visitorCount', visitorCount.toString());
+                animateCounter(visitorCount);
+            });
     }
     
 });
