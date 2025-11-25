@@ -28,7 +28,8 @@
         <a href="#registry">Registry</a> |
         <a href="#local-recommendations">Local</a> |
         <a href="#photos">Photos</a> |
-        <a href="#travel">Travel</a>
+        <a href="#travel">Travel</a> |
+        <a href="#comments">Messages</a>
     </nav>
 
     <!-- MAIN CONTAINER -->
@@ -44,6 +45,7 @@
                     <li><a href="#registry">Gift Registry</a></li>
                     <li><a href="#local-recommendations">Local</a></li>
                     <li><a href="#travel">Hotels & Travel</a></li>
+                    <li><a href="#comments">Messages</a></li>
                 </ul>
             </div>
 
@@ -302,6 +304,33 @@
                 </div>
             </section>
 
+            <!-- COMMENTS SECTION -->
+            <section id="comments">
+                <div class="content-box">
+                    <h2>💬 Leave Us a Message!</h2>
+                    <p><em>Share your excitement, memories, or well wishes! 💕</em></p>
+                    
+                    <div class="comment-form-container">
+                        <form id="commentForm">
+                            <label for="commentName">Your Name: *</label><br>
+                            <input type="text" id="commentName" name="commentName" required maxlength="50"><br><br>
+
+                            <label for="commentMessage">Message: *</label><br>
+                            <textarea id="commentMessage" name="commentMessage" rows="4" required maxlength="500"></textarea><br><br>
+
+                            <button type="submit" class="submit-btn">Post Message ✨</button>
+                        </form>
+                    </div>
+
+                    <div class="comments-list">
+                        <h3>📝 Messages from our loved ones:</h3>
+                        <div id="commentsContainer">
+                            <p class="loading-comments">Loading messages... 💕</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </main>
 
         <!-- RIGHT SIDEBAR -->
@@ -368,6 +397,38 @@
             </div>
         </div>
     </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script>
+        // TODO: Replace with your Firebase config
+        // Get this from Firebase Console: https://console.firebase.google.com/
+        // 1. Create a new project
+        // 2. Add a web app to your project
+        // 3. Copy the config here
+        const firebaseConfig = {
+            apiKey: "AIzaSyBU7lX-5rCoKVBrTKyoi_4U8ItA1O7Ga3k",
+            authDomain: "joewedding-ee85a.firebaseapp.com",
+            databaseURL: "https://joewedding-ee85a-default-rtdb.firebaseio.com",
+            projectId: "joewedding-ee85a",
+            storageBucket: "joewedding-ee85a.firebasestorage.app",
+            messagingSenderId: "118015182206",
+            appId: "1:118015182206:web:a5c08a9d9679f036955f2f",
+            measurementId: "G-5C4RY7WBX6"
+          };
+        
+        // Initialize Firebase
+        if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+            firebase.initializeApp(firebaseConfig);
+            window.database = firebase.database();
+        } else {
+            console.log("Firebase not configured - using localStorage fallback");
+            window.database = null;
+        }
+    </script>
 
     <script src="script.js"></script>
 </body>

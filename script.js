@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // VISITOR COUNTER - Global tracking via API with localStorage fallback
+    // VISITOR COUNTER - Using Firebase
     const counterDigits = document.querySelectorAll('.counter-digit');
     
     if (counterDigits.length > 0) {
@@ -337,45 +337,141 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Using a reliable free counter service: visitor-badge API
-        // This service is actively maintained and provides simple REST API
-        const pageId = encodeURIComponent('joe-liz-wedding-2026');
-        const counterUrl = `https://visitor-badge.laobi.icu/badge?page_id=${pageId}&format=json`;
-        
-        fetch(counterUrl, {
-            method: 'GET'
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('Service unavailable');
-            return response.text();
-        })
-        .then(text => {
-            // Try to parse as JSON
-            try {
-                const data = JSON.parse(text);
-                const count = parseInt(data.count || data.views || data.visitors || '1');
-                animateCounter(count);
-            } catch (e) {
-                // If not JSON, try to extract number from text/SVG
-                const match = text.match(/\d+/);
-                if (match) {
-                    animateCounter(parseInt(match[0]));
-                } else {
-                    throw new Error('Could not parse count');
+        // Use Firebase if configured, otherwise fallback to localStorage
+        if (window.database) {
+            const counterRef = window.database.ref('visitorCount');
+            
+            // Increment the counter
+            counterRef.transaction(function(currentCount) {
+                return (currentCount || 0) + 1;
+            }).then(function(result) {
+                if (result.committed) {
+                    animateCounter(result.snapshot.val());
                 }
-            }
-        })
-        .catch(error => {
-            // Fallback to localStorage if API is unavailable
-            console.log('Using localStorage for visitor count (API unavailable)');
+            }).catch(function(error) {
+                console.log('Firebase counter error:', error);
+                // Fallback to localStorage
+                let visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
+                visitorCount++;
+                localStorage.setItem('visitorCount', visitorCount.toString());
+                animateCounter(visitorCount);
+            });
+        } else {
+            // Firebase not configured, use localStorage
             let visitorCount = parseInt(localStorage.getItem('visitorCount') || '0');
             visitorCount++;
             localStorage.setItem('visitorCount', visitorCount.toString());
             animateCounter(visitorCount);
+        }
+    }
+    
+    // COMMENTS SECTION
+    const commentForm = document.getElementById('commentForm');
+    const commentsContainer = document.getElementById('commentsContainer');
+    
+    if (commentForm && commentsContainer) {
+        // Function to display a comment
+        function displayComment(commentId, commentData) {
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment-item';
+            commentDiv.dataset.commentId = commentId;
             
-            // For production: Consider setting up Google Analytics or similar
-            console.log('For accurate global tracking, consider Google Analytics or Plausible');
+            const date = new Date(commentData.timestamp);
+            const dateString = date.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+            });
+            
+            commentDiv.innerHTML = `
+                <div class="comment-header">
+                    <span class="comment-author">${escapeHtml(commentData.name)}</span>
+                    <span class="comment-date">${dateString}</span>
+                </div>
+                <div class="comment-text">${escapeHtml(commentData.message)}</div>
+            `;
+            
+            return commentDiv;
+        }
+        
+        // Function to escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Load existing comments
+        function loadComments() {
+            if (window.database) {
+                const commentsRef = window.database.ref('comments');
+                
+                commentsRef.orderByChild('timestamp').limitToLast(50).on('value', function(snapshot) {
+                    commentsContainer.innerHTML = '';
+                    
+                    if (!snapshot.exists()) {
+                        commentsContainer.innerHTML = '<p class="no-comments">No messages yet! Be the first to leave one! 💕</p>';
+                        return;
+                    }
+                    
+                    const comments = [];
+                    snapshot.forEach(function(childSnapshot) {
+                        comments.push({
+                            id: childSnapshot.key,
+                            data: childSnapshot.val()
+                        });
+                    });
+                    
+                    // Display in reverse order (newest first)
+                    comments.reverse().forEach(function(comment) {
+                        commentsContainer.appendChild(displayComment(comment.id, comment.data));
+                    });
+                });
+            } else {
+                // Firebase not configured
+                commentsContainer.innerHTML = '<p class="no-comments">Comments require Firebase configuration. See console for setup instructions.</p>';
+            }
+        }
+        
+        // Handle comment form submission
+        commentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('commentName').value.trim();
+            const message = document.getElementById('commentMessage').value.trim();
+            
+            if (!name || !message) {
+                alert('Please fill in both your name and message! 💕');
+                return;
+            }
+            
+            if (window.database) {
+                const commentsRef = window.database.ref('comments');
+                const newComment = {
+                    name: name,
+                    message: message,
+                    timestamp: Date.now()
+                };
+                
+                commentsRef.push(newComment)
+                    .then(function() {
+                        // Clear the form
+                        commentForm.reset();
+                        alert('Thanks for your message! 💕 It means so much to us!');
+                    })
+                    .catch(function(error) {
+                        console.error('Error posting comment:', error);
+                        alert('Oops! There was an error posting your message. Please try again.');
+                    });
+            } else {
+                alert('Comments require Firebase configuration. Please set up Firebase to enable this feature.');
+            }
         });
+        
+        // Load comments on page load
+        loadComments();
     }
     
 });
@@ -383,5 +479,13 @@ document.addEventListener('DOMContentLoaded', function() {
 // Fun console message for curious visitors
 console.log('💒 Welcome to our wedding website! 💒');
 console.log('Made with love and 90s nostalgia! ✨');
+console.log('');
+console.log('🔥 Firebase Setup Instructions:');
+console.log('1. Go to https://console.firebase.google.com/');
+console.log('2. Create a new project (or use existing)');
+console.log('3. Add a web app to your project');
+console.log('4. Copy the config and replace in index.html');
+console.log('5. Enable Realtime Database in Firebase Console');
+console.log('6. Set database rules to allow read/write (for testing) or implement proper security rules');
 
 
