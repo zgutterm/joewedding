@@ -37,6 +37,7 @@ header {
     text-align: center;
     margin: 20px;
     box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
 }
 
 header h1 {
@@ -45,17 +46,21 @@ header h1 {
     text-shadow: 2px 2px #FFD700;
     margin-bottom: 10px;
     animation: rainbow 3s infinite;
-    white-space: nowrap;
 }
 
 .header-image {
     width: 150px;
     height: 150px;
+    max-width: 150px;
+    max-height: 150px;
+    min-width: 150px;
+    min-height: 150px;
     border-radius: 50%;
     border: 5px solid #FFD700;
     box-shadow: 0 0 0 3px #FF1493, 5px 5px 15px rgba(0, 0, 0, 0.3);
     object-fit: cover;
-    margin-top: 20px;
+    margin: 20px auto 0;
+    display: block;
 }
 
 .tagline {
@@ -188,7 +193,7 @@ nav a:hover {
 
 .content-box h3 {
     color: #8B008B;
-    font-size: 1.4em;
+    font-size: 1.3em;
     margin-top: 20px;
     margin-bottom: 10px;
 }
@@ -200,6 +205,10 @@ nav a:hover {
 /* DECORATIVE LINES */
 center p {
     color: #FF1493;
+}
+
+.divider-line-mobile {
+    display: none;
 }
 
 /* DRESS CODE HIGHLIGHT BOX */
@@ -567,6 +576,21 @@ footer p {
         margin-bottom: 0;
     }
     
+    /* Smaller heading for save the date on mobile */
+    .sidebar-box h3 {
+        font-size: 0.95em;
+        white-space: nowrap;
+    }
+    
+    /* Show shorter divider lines on mobile */
+    .divider-line {
+        display: none;
+    }
+    
+    .divider-line-mobile {
+        display: block;
+    }
+    
     /* Floating music player for mobile */
     .music-player {
         position: fixed !important;
@@ -580,11 +604,11 @@ footer p {
     }
     
     .music-player.minimized {
-        width: 60px;
-        height: 60px;
+        width: 60px !important;
+        height: 60px !important;
         border-radius: 50%;
-        padding: 0;
-        overflow: hidden;
+        padding: 0 !important;
+        overflow: hidden !important;
     }
     
     .music-player.minimized .music-info,
@@ -633,17 +657,37 @@ footer p {
     }
     
     .music-player.minimized .music-close {
-        display: none;
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    header {
+        margin: 10px;
+        padding: 20px 15px;
     }
     
     header h1 {
-        font-size: 1.8em;
+        font-size: 1.6em;
+        line-height: 1.3;
+        margin-bottom: 10px;
+    }
+    
+    .tagline {
+        font-size: 1.1em;
+        margin-bottom: 15px;
     }
     
     .header-image {
-        width: 100px;
-        height: 100px;
-        margin-top: 15px;
+        width: 90px !important;
+        height: 90px !important;
+        max-width: 90px !important;
+        max-height: 90px !important;
+        min-width: 90px !important;
+        min-height: 90px !important;
+        margin: 10px auto 0 !important;
+        border-width: 4px;
     }
     
     .farm-background {
@@ -657,17 +701,33 @@ footer p {
 
 /* Extra small mobile devices */
 @media (max-width: 480px) {
-    header h1 {
-        font-size: 1.4em;
-    }
     header {
-        padding-bottom: 20px;
+        margin: 8px;
+        padding: 15px 10px;
+    }
+    
+    header h1 {
+        font-size: 1.3em;
+        line-height: 1.3;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        margin-bottom: 8px;
+    }
+    
+    .tagline {
+        font-size: 1em;
+        margin-bottom: 12px;
     }
     
     .header-image {
-        width: 80px;
-        height: 80px;
-        margin-top: 10px;
+        width: 75px !important;
+        height: 75px !important;
+        max-width: 75px !important;
+        max-height: 75px !important;
+        min-width: 75px !important;
+        min-height: 75px !important;
+        margin: 8px auto 0 !important;
+        border-width: 3px;
     }
     
     nav {
@@ -677,6 +737,36 @@ footer p {
     nav a {
         display: inline-block;
         margin: 5px;
+    }
+}
+
+/* Very small mobile devices */
+@media (max-width: 360px) {
+    header {
+        margin: 5px !important;
+        padding: 12px 8px !important;
+    }
+    
+    header h1 {
+        font-size: 1.1em !important;
+        line-height: 1.2 !important;
+        margin-bottom: 6px !important;
+    }
+    
+    .tagline {
+        font-size: 0.9em !important;
+        margin-bottom: 10px !important;
+    }
+    
+    .header-image {
+        width: 65px !important;
+        height: 65px !important;
+        max-width: 65px !important;
+        max-height: 65px !important;
+        min-width: 65px !important;
+        min-height: 65px !important;
+        margin: 6px auto 0 !important;
+        border-width: 3px !important;
     }
 }
 
