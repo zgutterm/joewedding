@@ -28,31 +28,41 @@ document.addEventListener('DOMContentLoaded', function() {
             // Get form values
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const attending = document.querySelector('input[name="attending"]:checked');
             const guests = document.getElementById('guests').value;
-            const message = document.getElementById('message').value;
+            const fridayAttending = document.querySelector('input[name="fridayAttending"]:checked');
+            const saturdayAttending = document.querySelector('input[name="saturdayAttending"]:checked');
+            const karaoke = document.getElementById('karaoke').value;
+            const dietary = document.getElementById('dietary').value;
+            const camping = document.querySelector('input[name="camping"]:checked');
             
-            // Check if attending option is selected
-            if (!attending) {
-                alert('Please let us know if you can attend! 💕');
+            // Check if required fields are filled
+            if (!fridayAttending) {
+                alert('Please let us know if you can attend Friday night! 💕');
+                return;
+            }
+            if (!saturdayAttending) {
+                alert('Please let us know if you can attend Saturday! 💕');
                 return;
             }
             
             // Show confirmation message
-            const attendingValue = attending.value;
-            let confirmMessage = '';
-            
-            if (attendingValue === 'yes') {
-                confirmMessage = `🎉 Yay! Thanks ${name}! We're so excited to celebrate with you!\n\n` +
-                                `We've recorded:\n` +
+            let confirmMessage = `🎉 Thanks ${name}! We've recorded your RSVP:\n\n` +
                                 `- Email: ${email}\n` +
                                 `- Number of guests: ${guests}\n` +
-                                `${message ? '- Special requests: ' + message : ''}\n\n` +
-                                `See you at the wedding! 💒`;
-            } else {
-                confirmMessage = `😢 Thanks for letting us know, ${name}. We'll miss you!\n\n` +
-                                `You'll be in our thoughts! 💕`;
+                                `- Friday welcome reception: ${fridayAttending.value}\n` +
+                                `- Saturday ceremony & reception: ${saturdayAttending.value}\n`;
+            
+            if (karaoke) {
+                confirmMessage += `- Karaoke request: ${karaoke}\n`;
             }
+            if (dietary) {
+                confirmMessage += `- Special requests: ${dietary}\n`;
+            }
+            if (camping) {
+                confirmMessage += `- Camping: ${camping.value}\n`;
+            }
+            
+            confirmMessage += `\nSee you at the wedding! 💒`;
             
             alert(confirmMessage);
             
@@ -60,19 +70,16 @@ document.addEventListener('DOMContentLoaded', function() {
             rsvpForm.reset();
             
             // ===================================
-            // TO ACTUALLY SEND THIS DATA:
-            // Option 1: Use Formspree (https://formspree.io/)
-            //   - Sign up, get an endpoint
-            //   - Add action="https://formspree.io/f/YOUR_FORM_ID" to the form tag
-            //   - Remove e.preventDefault() above
+            // TO ACTUALLY SEND THIS DATA TO GOOGLE FORMS:
+            // 1. Get your Google Form's pre-filled link
+            // 2. Extract the entry IDs (entry.123456789) for each field
+            // 3. Replace the form action and field names below
+            // 4. Remove e.preventDefault() above
             //
-            // Option 2: Use Google Forms
-            //   - Create a Google Form
-            //   - Use form action to point to it
-            //
-            // Option 3: Use Netlify Forms
-            //   - Add netlify attribute to form tag
-            //   - Deploy to Netlify
+            // Example:
+            // <form action="https://docs.google.com/forms/d/e/FORM_ID/formResponse" method="POST">
+            //   <input name="entry.123456789" ... > (for name field)
+            //   <input name="entry.987654321" ... > (for email field)
             // ===================================
         });
     }
@@ -204,6 +211,102 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 this.style.transform = 'rotate(0deg)';
             }, 500);
+        });
+    }
+    
+    // MUSIC PLAYER CONTROLS
+    const bgMusic = document.getElementById('bgMusic');
+    const audioSource = document.getElementById('audioSource');
+    const playBtn = document.getElementById('playBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const equalizer = document.getElementById('equalizer');
+    const songTitle = document.getElementById('songTitle');
+    const songArtist = document.getElementById('songArtist');
+    
+    // Array of available songs
+    const songs = [
+        {
+            title: 'Jokerman',
+            artist: 'Bob Dylan',
+            file: 'music/blowin-in-the-wind.mp3',
+            startTime: 0
+        },
+        {
+            title: 'You\'re Still The One',
+            artist: 'Shania Twain',
+            file: 'music/you-are-still-the-one.mp3',
+            startTime: 21
+        }
+    ];
+    
+    // Randomly select a song
+    const randomSong = songs[Math.floor(Math.random() * songs.length)];
+    
+    // Set up the music player
+    if (bgMusic && audioSource && playBtn && pauseBtn && songTitle && songArtist) {
+        // Load the random song
+        audioSource.src = randomSong.file;
+        bgMusic.load();
+        
+        // Update song info display
+        songTitle.innerHTML = '<strong>' + randomSong.title + '</strong>';
+        songArtist.innerHTML = '<em>' + randomSong.artist + '</em>';
+        
+        // Set start time when song loads
+        bgMusic.addEventListener('loadedmetadata', function() {
+            bgMusic.currentTime = randomSong.startTime;
+        });
+        
+        playBtn.addEventListener('click', function() {
+            // Set the start time before playing
+            if (bgMusic.currentTime === 0 || bgMusic.currentTime < randomSong.startTime) {
+                bgMusic.currentTime = randomSong.startTime;
+            }
+            bgMusic.play();
+            playBtn.style.display = 'none';
+            pauseBtn.style.display = 'block';
+            if (equalizer) {
+                equalizer.style.display = 'flex';
+            }
+        });
+        
+        pauseBtn.addEventListener('click', function() {
+            bgMusic.pause();
+            pauseBtn.style.display = 'none';
+            playBtn.style.display = 'block';
+            if (equalizer) {
+                equalizer.style.display = 'none';
+            }
+        });
+        
+        // Handle when song ends (though it's set to loop)
+        bgMusic.addEventListener('ended', function() {
+            // Reset to start time for looping
+            bgMusic.currentTime = randomSong.startTime;
+            pauseBtn.style.display = 'none';
+            playBtn.style.display = 'block';
+            if (equalizer) {
+                equalizer.style.display = 'none';
+            }
+        });
+    }
+    
+    // MOBILE MUSIC PLAYER CONTROLS
+    const musicPlayer = document.getElementById('musicPlayer');
+    const musicClose = document.getElementById('musicClose');
+    const musicToggle = document.getElementById('musicToggle');
+    
+    if (musicClose && musicPlayer) {
+        musicClose.addEventListener('click', function(e) {
+            e.stopPropagation();
+            musicPlayer.classList.add('minimized');
+        });
+    }
+    
+    if (musicToggle && musicPlayer) {
+        musicToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            musicPlayer.classList.remove('minimized');
         });
     }
     

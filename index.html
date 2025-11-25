@@ -17,6 +17,7 @@
     <header>
         <h1>💒 Liz and Joseph's Wedding 💒</h1>
         <p class="tagline">~* You're Invited! *~</p>
+        <img src="images/joetitle.JPG" alt="Liz and Joseph" class="header-image">
     </header>
 
     <!-- NAVIGATION -->
@@ -68,21 +69,20 @@
             
             <!-- HOME SECTION -->
             <section id="home">
-                <div class="content-box">
-                    <h2>💐 Welcome! 💐</h2>
-                    <p>
-                        Hey there! We're so excited to celebrate our special day with you. 
-                        This website has all the info you need about our wedding.
-                    </p>
-                    <p>
-                        Browse around to find details about the ceremony, reception, travel information, 
-                        and more. Don't forget to RSVP!
-                    </p>
-                    <center>
-                        <p>───────────── ✧ ─────────────</p>
-                        <p id="quote"><em>"Love is patient, love is kind..." - 1 Corinthians 13:4</em></p>
-                        <p>───────────── ✧ ─────────────</p>
-                    </center>
+                <div class="content-box farm-background">
+                    <div class="farm-overlay">
+                        <h2>💐 Welcome! 💐</h2>
+
+                        <p>
+                            Browse around to find details about the ceremony, reception, travel information, 
+                            and more. Can't wait to see y'all at the farm!
+                        </p>
+                        <center>
+                            <p>───────────── ✧ ─────────────</p>
+                            <p id="quote"><em>"Love is patient, love is kind..." - 1 Corinthians 13:4</em></p>
+                            <p>───────────── ✧ ─────────────</p>
+                        </center>
+                    </div>
                 </div>
             </section>
 
@@ -98,7 +98,7 @@
                     <p>
                         <strong>Time:</strong> 6:00 PM - 9:00 PM<br>
                         <strong>Location:</strong> <a href="https://maps.app.goo.gl/HEUi8VjpyGLdtMdF7" target="_blank">Cohab Space 1547 W English Rd, High Point, NC 27262</a> <br>
-                        <strong>Details:</strong> Kick off the weekend with drinks and appetizers!<br>
+                        <strong>Details:</strong> Kick off the weekend with drinks, oysters and live band karaoke. Feel free to request a song in your RSVP!<br>
                         <em>Wear anything from jeans to your favorite dress!</em>
                     </p>
 
@@ -131,52 +131,80 @@
                     <p>
                         <strong>Time:</strong> 10:00 AM - 12:00 PM<br>
                         <strong>Location:</strong> TBD<br>
-                        <strong>Details:</strong> Join us for a casual brunch before heading home!<br>
-                        <em>Casual attire</em>
+                        <strong>Details:</strong> Join us for a casual brunch<br>
                     </p>
-
-                    <center><p>───────────── ✧ ─────────────</p></center>
-
-                    <h3>👔 Dress Code Summary</h3>
+                    <h4>🥞 High Point RockersBaseball Game</h4>
                     <p>
-                        <strong>Friday Welcome:</strong> Jeans to your favorite dress!<br>
-                        <strong>Saturday Ceremony & Reception:</strong> Summer farm wedding - wear what makes you comfortable! (Carhartt, tie-dye, or seersucker all welcome!)<br>
-                        <strong>Sunday Brunch:</strong> Casual
+                        <strong>Time:</strong> 12:00 PM<br>
+                        <strong>Location:</strong> <a href="https://maps.app.goo.gl/2U6qqugHWCoJnUor7" target="_blank">301 N Elm St, High Point, NC 27262</a><br>
+                        <strong>Details:</strong> Join us for a casual brunch<br>
                     </p>
+
+
                 </div>
             </section>
 
             <!-- RSVP SECTION -->
-            <section id="rsvp">
+            <!-- <section id="rsvp">
                 <div class="content-box">
                     <h2>💌 RSVP</h2>
                     <p>
                         Please let us know if you can make it! RSVP by <strong>April 15, 2026</strong>.
                     </p>
                     
-                    <!-- Simple RSVP form -->
                     <div class="form-container">
                         <form id="rsvpForm">
-                            <label for="name">Your Name(s):</label><br>
+                            <label for="name">Your Name(s): *</label><br>
                             <input type="text" id="name" name="name" required><br><br>
 
-                            <label for="email">Email:</label><br>
+                            <label for="email">Email: *</label><br>
                             <input type="email" id="email" name="email" required><br><br>
 
-                            <label>Will you be attending?</label><br>
-                            <input type="radio" id="yes" name="attending" value="yes">
-                            <label for="yes">Yes, can't wait! 🎉</label><br>
-                            <input type="radio" id="no" name="attending" value="no">
-                            <label for="no">Sorry, can't make it 😢</label><br><br>
+                            <label for="guests">Number of Guests: *</label><br>
+                            <input type="number" id="guests" name="guests" min="1" max="10" value="1" required><br><br>
 
-                            <label for="guests">Number of Guests:</label><br>
-                            <input type="number" id="guests" name="guests" min="1" max="10" value="1"><br><br>
+                            <label>Will you be attending the Friday night welcome reception? *</label><br>
+                            <input type="radio" id="fridayYes" name="fridayAttending" value="Yes" required>
+                            <label for="fridayYes">Yes</label><br>
+                            <input type="radio" id="fridayNo" name="fridayAttending" value="No">
+                            <label for="fridayNo">No</label><br><br>
 
-                            <label for="message">Special Requests / Dietary Restrictions:</label><br>
-                            <textarea id="message" name="message" rows="4"></textarea><br><br>
+                            <label>Will you be attending the Saturday ceremony and reception? *</label><br>
+                            <input type="radio" id="saturdayYes" name="saturdayAttending" value="Yes" required>
+                            <label for="saturdayYes">Yes</label><br>
+                            <input type="radio" id="saturdayNo" name="saturdayAttending" value="No">
+                            <label for="saturdayNo">No</label><br><br>
+
+                            <label for="karaoke">Live band karaoke requests for Friday night?<br><span style="font-size: 0.9em; font-style: italic;">(You can sing your favorite song with a top notch backing band like you've always dreamed)</span></label><br>
+                            <textarea id="karaoke" name="karaoke" rows="3"></textarea><br><br>
+
+                            <label for="dietary">Special Requests or Dietary Restrictions:</label><br>
+                            <textarea id="dietary" name="dietary" rows="3"></textarea><br><br>
+
+                            <label>Interested in camping?</label><br>
+                            <input type="radio" id="campingYes" name="camping" value="Yes">
+                            <label for="campingYes">Yes</label><br>
+                            <input type="radio" id="campingNo" name="camping" value="No">
+                            <label for="campingNo">No</label><br>
 
                             <button type="submit" class="submit-btn">Send RSVP ✨</button>
                         </form>
+                    </div>
+                </div>
+            </section> -->
+
+            <!-- PHOTOS SECTION -->
+            <section id="photos">
+                <div class="content-box">
+                    <h2>📸 Photo Gallery</h2>
+                    <center>
+                        <button id="refreshPhotos" class="refresh-btn">🔄 Show Me More Photos!</button>
+                    </center>
+                    <div class="photo-grid">
+                        <img src="images/joe1.jpg" alt="Liz & Joseph - Photo 1">
+                        <img src="images/joe2.jpg" alt="Liz & Joseph - Photo 2">
+                        <img src="images/joe3.JPEG" alt="Liz & Joseph - Photo 3">
+                        <img src="images/joe4.JPG" alt="Liz & Joseph - Photo 4">
                     </div>
                 </div>
             </section>
@@ -216,22 +244,6 @@
                 </div>
             </section>
 
-            <!-- PHOTOS SECTION -->
-            <section id="photos">
-                <div class="content-box">
-                    <h2>📸 Photo Gallery</h2>
-                    <center>
-                        <button id="refreshPhotos" class="refresh-btn">🔄 Show Me More Photos!</button>
-                    </center>
-                    <div class="photo-grid">
-                        <img src="images/joe1.jpg" alt="Liz & Joseph - Photo 1">
-                        <img src="images/joe2.jpg" alt="Liz & Joseph - Photo 2">
-                        <img src="images/joe3.JPEG" alt="Liz & Joseph - Photo 3">
-                        <img src="images/joe4.JPG" alt="Liz & Joseph - Photo 4">
-                    </div>
-                </div>
-            </section>
-
             <!-- TRAVEL SECTION -->
             <section id="travel">
                 <div class="content-box">
@@ -243,24 +255,23 @@
                     </p>
                     <ul>
                         <li>
-                            <strong>Hotel Name 1</strong><br>
-                            123 Hotel Street<br>
-                            (555) 123-4567<br>
-                            <em>Mention "Joseph's Wedding" for group rate</em>
+                            <strong>Spring Hill Suites</strong><br>
+                            121 Virginia Pl, High Point, NC 27262<br>
+                            (336)234-5500<br>
+                            <em>Mention "Joseph and Liz's Wedding" for group rate</em>
                         </li>
                         <li>
-                            <strong>Hotel Name 2</strong><br>
-                            456 Inn Avenue<br>
-                            (555) 987-6543<br>
-                            <em>Use code: WEDDING2026</em>
+                            <strong>Camp at the Farm!</strong><br>
+                           BYO tent and we'll provide the scenery!<br>
+                           <em>Let us know in your RSVP if you're interested in camping</em>
                         </li>
                     </ul>
 
                     <h3>🚗 Getting There</h3>
                     <p>
-                        <strong>From Airport:</strong> The venue is about 30 minutes from the airport.<br>
-                        <strong>Parking:</strong> Free parking available at the venue.<br>
-                        <strong>Rideshare:</strong> Uber and Lyft are available in the area.
+                        <strong>From Airport:</strong> The venue is about 30 minutes from the Greensboro airport and 1 hour and 30 minutes from the Raleigh airport..<br>
+                        <strong>Parking:</strong> Free parking available at the farm.<br>
+                        <strong>Transportation:</strong> Shuttle information TBD.
                     </p>
                 </div>
             </section>
@@ -278,18 +289,34 @@
                 </p>
             </div>
 
-            <div class="sidebar-box">
-                <h3>📱 Social Media</h3>
-                <p style="text-align: center;">
-                    Share your photos with<br>
-                    <strong>#JosephGetsMarried</strong>
-                </p>
+            <div class="sidebar-box music-player" id="musicPlayer">
+                <button class="music-close" id="musicClose">✕</button>
+                <div class="music-toggle" id="musicToggle">🎵</div>
+                <h3>🎵 Now Playing 🎵</h3>
+                <div class="music-info">
+                    <p id="songTitle"><strong>Loading...</strong></p>
+                    <p id="songArtist"><em>...</em></p>
+                </div>
+                <audio id="bgMusic" loop>
+                    <source id="audioSource" src="" type="audio/mpeg">
+                </audio>
+                <div class="music-controls">
+                    <button id="playBtn" class="music-btn">▶️ Play</button>
+                    <button id="pauseBtn" class="music-btn" style="display:none;">⏸️ Pause</button>
+                </div>
+                <div class="equalizer" id="equalizer" style="display:none;">
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                    <div class="eq-bar"></div>
+                </div>
             </div>
 
             <div class="sidebar-box">
                 <h3>🎵 Music Requests</h3>
                 <p>
-                    Got a song you want to hear at the reception? Let us know in your RSVP!
+                    Got a song you want to sing at the karaoke? Let us know in your RSVP!
                 </p>
             </div>
         </aside>

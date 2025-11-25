@@ -45,6 +45,17 @@ header h1 {
     text-shadow: 2px 2px #FFD700;
     margin-bottom: 10px;
     animation: rainbow 3s infinite;
+    white-space: nowrap;
+}
+
+.header-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #FFD700;
+    box-shadow: 0 0 0 3px #FF1493, 5px 5px 15px rgba(0, 0, 0, 0.3);
+    object-fit: cover;
+    margin-top: 20px;
 }
 
 .tagline {
@@ -217,6 +228,33 @@ center p {
     font-size: 1.1em;
     line-height: 1.8;
     padding: 0 20px;
+}
+
+/* FARM BACKGROUND */
+.farm-background {
+    position: relative;
+    background-image: url('images/farm.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    padding: 0 !important;
+}
+
+.farm-overlay {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.farm-overlay h2 {
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+}
+
+.farm-overlay p,
+.farm-overlay em {
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
 }
 
 /* REGISTRY LIST */
@@ -498,8 +536,138 @@ footer p {
         width: 100%;
     }
     
-    header h1 {
+    /* Make left sidebar use flexbox with wrap */
+    .sidebar-left {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0;
+    }
+    
+    /* Hide Quick Links on mobile */
+    .sidebar-left .sidebar-box:nth-child(1) {
+        display: none;
+    }
+    
+    /* The Couple and Save the Date sit side-by-side */
+    .sidebar-left .sidebar-box:nth-child(2),
+    .sidebar-left .sidebar-box:nth-child(3) {
+        flex: 1 1 calc(50% - 7.5px);
+        width: calc(50% - 7.5px);
+    }
+    
+    /* Adjust gap between side-by-side boxes */
+    .sidebar-left .sidebar-box:nth-child(2) {
+        margin-right: 7.5px;
+        margin-bottom: 0;
+    }
+    
+    .sidebar-left .sidebar-box:nth-child(3) {
+        margin-left: 7.5px;
+        margin-bottom: 0;
+    }
+    
+    /* Floating music player for mobile */
+    .music-player {
+        position: fixed !important;
+        bottom: 20px;
+        right: 20px;
+        width: 280px;
+        max-width: calc(100vw - 40px);
+        z-index: 9998;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5) !important;
+        transition: all 0.3s ease;
+    }
+    
+    .music-player.minimized {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        padding: 0;
+        overflow: hidden;
+    }
+    
+    .music-player.minimized .music-info,
+    .music-player.minimized .music-controls,
+    .music-player.minimized .equalizer,
+    .music-player.minimized h3 {
+        display: none;
+    }
+    
+    .music-player.minimized .music-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
         font-size: 2em;
+    }
+    
+    .music-player.hidden {
+        display: none;
+    }
+    
+    /* Music player controls for mobile */
+    .music-toggle {
+        display: none;
+        cursor: pointer;
+    }
+    
+    .music-close {
+        display: block !important;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(255, 20, 147, 0.8);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        z-index: 10;
+        line-height: 1;
+        padding: 0;
+    }
+    
+    .music-player.minimized .music-close {
+        display: none;
+    }
+    
+    header h1 {
+        font-size: 1.8em;
+    }
+    
+    .header-image {
+        width: 100px;
+        height: 100px;
+        margin-top: 15px;
+    }
+    
+    .farm-background {
+        min-height: 300px;
+    }
+    
+    .farm-overlay {
+        padding: 20px;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.4em;
+    }
+    header {
+        padding-bottom: 20px;
+    }
+    
+    .header-image {
+        width: 80px;
+        height: 80px;
+        margin-top: 10px;
     }
     
     nav {
@@ -515,6 +683,109 @@ footer p {
 /* SMOOTH SCROLLING */
 html {
     scroll-behavior: smooth;
+}
+
+/* MUSIC PLAYER */
+.music-player {
+    background: linear-gradient(135deg, #E6E6FA, #DDA0DD) !important;
+    text-align: center;
+}
+
+/* Hide close button and toggle on desktop */
+.music-close,
+.music-toggle {
+    display: none;
+}
+
+.music-info {
+    background: #FFF;
+    border: 2px solid #FF69B4;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.music-info p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.music-controls {
+    margin: 15px 0;
+}
+
+.music-btn {
+    background: linear-gradient(to bottom, #FF69B4, #FF1493);
+    color: #FFF;
+    border: 2px solid #FFD700;
+    padding: 8px 15px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s;
+    border-radius: 5px;
+    width: 100%;
+    margin: 5px 0;
+}
+
+.music-btn:hover {
+    background: linear-gradient(to bottom, #FFD700, #FFA500);
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+}
+
+.music-btn:active {
+    transform: translateY(0);
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+
+/* EQUALIZER ANIMATION */
+.equalizer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 5px;
+    height: 50px;
+    margin: 15px 0;
+}
+
+.eq-bar {
+    width: 8px;
+    background: linear-gradient(to top, #FF1493, #FFD700);
+    border-radius: 3px;
+    animation: equalize 0.8s ease-in-out infinite;
+}
+
+.eq-bar:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.eq-bar:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.eq-bar:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.eq-bar:nth-child(4) {
+    animation-delay: 0.3s;
+}
+
+.eq-bar:nth-child(5) {
+    animation-delay: 0.4s;
+}
+
+@keyframes equalize {
+    0%, 100% {
+        height: 10px;
+    }
+    50% {
+        height: 40px;
+    }
 }
 
 /* LINKS IN CONTENT */
