@@ -5,6 +5,19 @@
 // Wait for page to load
 document.addEventListener('DOMContentLoaded', function() {
     
+    // RANDOM QUOTE DISPLAY
+    const quotes = [
+        '"In a heart there are windows and doors<br>You can let the light in<br>You can feel the wind blow" <br> <strong>Warren Zevon</strong>',
+        '"If not for you<br>Winter would have no spring<br>Couldn\'t hear the robin sing<br>I just wouldn\'t have a clue<br>If not for you" <br> <strong>Bob Dylan</strong>',
+        '"If you know what life is worth, you will look for yours on earth" <br> <strong>Bob Marley</strong>'
+    ];
+    
+    const quoteElement = document.getElementById('quote');
+    if (quoteElement) {
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        quoteElement.innerHTML = '<em>' + randomQuote + '</em>';
+    }
+    
     // RSVP FORM HANDLING
     const rsvpForm = document.getElementById('rsvpForm');
     
@@ -121,6 +134,78 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+    
+    // RANDOMIZE PHOTO GALLERY
+    // Add all available images here
+    const allPhotos = [
+        'images/joe1.jpg',
+        'images/joe2.jpg',
+        'images/joe3.JPEG',
+        'images/joe4.JPG',
+        'images/joe5.jpg',
+        'images/joe6.jpg',
+        'images/joe7.jpg',
+        'images/joe8.jpg',
+        'images/joe9.jpg',
+        'images/joe10.jpg',
+        'images/joe11.jpg',
+        'images/joe12.jpg',
+        'images/joe13.jpg',
+        'images/joe14.jpg',
+        'images/joe15.jpg',
+        'images/joe16.jpg'
+    ];
+    
+    // Function to shuffle array
+    function shuffleArray(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    }
+    
+    // Function to update photo gallery
+    function updatePhotoGallery() {
+        const photoGrid = document.querySelector('.photo-grid');
+        if (photoGrid) {
+            // Shuffle photos
+            const shuffledPhotos = shuffleArray(allPhotos);
+            
+            // Get all img elements in photo grid
+            const photoImages = photoGrid.querySelectorAll('img');
+            
+            // Update each image with shuffled photos (show 4 random)
+            photoImages.forEach((img, index) => {
+                if (index < shuffledPhotos.length && index < 4) {
+                    // Add a quick fade effect
+                    img.style.opacity = '0';
+                    setTimeout(() => {
+                        img.src = shuffledPhotos[index];
+                        img.alt = `Liz & Joseph - Photo ${index + 1}`;
+                        img.style.opacity = '1';
+                    }, 150);
+                }
+            });
+        }
+    }
+    
+    // Initialize photo gallery on page load
+    updatePhotoGallery();
+    
+    // Add click event to refresh button
+    const refreshButton = document.getElementById('refreshPhotos');
+    if (refreshButton) {
+        refreshButton.addEventListener('click', function() {
+            updatePhotoGallery();
+            // Add a fun animation to the button
+            this.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                this.style.transform = 'rotate(0deg)';
+            }, 500);
+        });
+    }
     
 });
 
