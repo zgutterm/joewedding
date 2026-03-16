@@ -18,69 +18,48 @@ document.addEventListener('DOMContentLoaded', function() {
         quoteElement.innerHTML = '<em>' + randomQuote + '</em>';
     }
     
-    // RSVP FORM HANDLING
-    const rsvpForm = document.getElementById('rsvpForm');
+    // JUMP TO TOP (mobile) - show after scrolling, scroll to top on click
+    const jumpToTopBtn = document.getElementById('jumpToTop');
+    if (jumpToTopBtn) {
+        function toggleJumpToTop() {
+            if (window.innerWidth <= 768 && window.scrollY > 300) {
+                jumpToTopBtn.classList.remove('hidden');
+            } else {
+                jumpToTopBtn.classList.add('hidden');
+            }
+        }
+        window.addEventListener('scroll', toggleJumpToTop);
+        toggleJumpToTop();
+        jumpToTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
     
-    if (rsvpForm) {
-        rsvpForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent actual form submission
-            
-            // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const guests = document.getElementById('guests').value;
-            const fridayAttending = document.querySelector('input[name="fridayAttending"]:checked');
-            const saturdayAttending = document.querySelector('input[name="saturdayAttending"]:checked');
-            const karaoke = document.getElementById('karaoke').value;
-            const dietary = document.getElementById('dietary').value;
-            const camping = document.querySelector('input[name="camping"]:checked');
-            
-            // Check if required fields are filled
-            if (!fridayAttending) {
-                alert('Please let us know if you can attend Friday night! 💕');
-                return;
-            }
-            if (!saturdayAttending) {
-                alert('Please let us know if you can attend Saturday! 💕');
-                return;
-            }
-            
-            // Show confirmation message
-            let confirmMessage = `🎉 Thanks ${name}! We've recorded your RSVP:\n\n` +
-                                `- Email: ${email}\n` +
-                                `- Number of guests: ${guests}\n` +
-                                `- Friday welcome reception: ${fridayAttending.value}\n` +
-                                `- Saturday ceremony & reception: ${saturdayAttending.value}\n`;
-            
-            if (karaoke) {
-                confirmMessage += `- Karaoke request: ${karaoke}\n`;
-            }
-            if (dietary) {
-                confirmMessage += `- Special requests: ${dietary}\n`;
-            }
-            if (camping) {
-                confirmMessage += `- Camping: ${camping.value}\n`;
-            }
-            
-            confirmMessage += `\nSee you at the wedding! 💒`;
-            
-            alert(confirmMessage);
-            
-            // Optional: Reset form after submission
-            rsvpForm.reset();
-            
-            // ===================================
-            // TO ACTUALLY SEND THIS DATA TO GOOGLE FORMS:
-            // 1. Get your Google Form's pre-filled link
-            // 2. Extract the entry IDs (entry.123456789) for each field
-            // 3. Replace the form action and field names below
-            // 4. Remove e.preventDefault() above
-            //
-            // Example:
-            // <form action="https://docs.google.com/forms/d/e/FORM_ID/formResponse" method="POST">
-            //   <input name="entry.123456789" ... > (for name field)
-            //   <input name="entry.987654321" ... > (for email field)
-            // ===================================
+    // QUAKER CEREMONY COLLAPSIBLE
+    const ceremonyToggleBtn = document.getElementById('ceremonyToggleBtn');
+    const ceremonyToggleContent = document.getElementById('ceremonyToggleContent');
+    if (ceremonyToggleBtn && ceremonyToggleContent) {
+        ceremonyToggleBtn.addEventListener('click', function() {
+            const isExpanded = ceremonyToggleContent.hidden;
+            ceremonyToggleContent.hidden = !isExpanded;
+            ceremonyToggleBtn.setAttribute('aria-expanded', isExpanded);
+            ceremonyToggleBtn.textContent = isExpanded ? 'Show less ▲' : 'Learn more about the Quaker ceremony ▼';
+        });
+    }
+    
+    // MOBILE NAV TOGGLE
+    const navToggle = document.getElementById('navToggle');
+    const nav = document.querySelector('nav');
+    if (navToggle && nav) {
+        navToggle.addEventListener('click', function() {
+            nav.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', nav.classList.contains('open'));
+        });
+        document.querySelectorAll('.nav-links a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                nav.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            });
         });
     }
     

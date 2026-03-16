@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💒 Liz & Joseph's Wedding! 💒</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 </head>
 <body>
     
-    <!-- TOP BAR WITH MARQUEE -->
+    <!-- TOP BAR WITH SCROLLING TEXT -->
     <div class="top-bar">
-        <marquee behavior="scroll" direction="left">💐 Welcome to Liz and Joseph's Wedding Website! 💐 Save the Date! 💐</marquee>
+        <div class="marquee-wrap">
+            <span class="marquee-text">💐 Welcome to Liz and Joseph's Wedding Website! 💐 Save the Date! 💐</span>
+            <span class="marquee-text" aria-hidden="true">💐 Welcome to Liz and Joseph's Wedding Website! 💐 Save the Date! 💐</span>
+        </div>
     </div>
 
     <!-- HEADER -->
@@ -22,14 +26,17 @@
 
     <!-- NAVIGATION -->
     <nav>
-        <a href="#home">Home</a> |
-        <a href="#details">Details</a> |
-        <!-- <a href="#rsvp">RSVP</a> | -->
-        <a href="#registry">Registry</a> |
-        <a href="#local-recommendations">Local</a> |
-        <a href="#photos">Photos</a> |
-        <a href="#travel">Travel</a> |
-        <a href="#comments">Messages</a>
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">☰ Menu</button>
+        <div class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#rsvp">RSVP</a>
+            <a href="#details">Details</a>
+            <a href="#photos">Photos</a>
+            <a href="#travel">Travel</a>
+            <a href="#registry">Registry</a>
+            <a href="#local-recommendations">Local</a>
+            <a href="#comments">Messages</a>
+        </div>
     </nav>
 
     <!-- MAIN CONTAINER -->
@@ -40,11 +47,13 @@
             <div class="sidebar-box">
                 <h3>✨ Quick Links ✨</h3>
                 <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#rsvp">RSVP</a></li>
                     <li><a href="#details">Event Details</a></li>
-                    <!-- <li><a href="#rsvp">RSVP Here</a></li> -->
+                    <li><a href="#photos">Photos</a></li>
+                    <li><a href="#travel">Hotels & Travel</a></li>
                     <li><a href="#registry">Gift Registry</a></li>
                     <li><a href="#local-recommendations">Local</a></li>
-                    <li><a href="#travel">Hotels & Travel</a></li>
                     <li><a href="#comments">Messages</a></li>
                 </ul>
             </div>
@@ -92,6 +101,19 @@
                 </div>
             </section>
 
+            <!-- RSVP SECTION -->
+            <section id="rsvp">
+                <div class="content-box">
+                    <h2>💌 RSVP</h2>
+                    <p>
+                        Please let us know if you can make it! RSVP by <strong>April 15, 2026</strong>.
+                    </p>
+                    <p class="rsvp-cta">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScL5lCZ5eEpneE738BniHOuFZbclmKwZ22A_2VFUt-b5r4Cqg/viewform" target="_blank" rel="noopener noreferrer" class="rsvp-link">RSVP Now →</a>
+                    </p>
+                </div>
+            </section>
+
             <!-- DETAILS SECTION -->
             <section id="details">
                 <div class="content-box">
@@ -105,7 +127,7 @@
                     <h3>📅 Friday, June 19th, 2026</h3>
                     <h4>🍹 Welcome Drinks</h4>
                     <p>
-                        <strong>Time:</strong> TBD<br>
+                        <strong>Time:</strong> 7-10:30 PM<br>
                         <strong>Location:</strong> <a href="https://maps.app.goo.gl/HEUi8VjpyGLdtMdF7" target="_blank">Cohab Space 1547 W English Rd, High Point, NC 27262</a> <br>
                         <strong>Details:</strong> Kick off the weekend with drinks, oysters and live band karaoke. Feel free to request a song in your RSVP!<br>
                         <em>Wear anything from jeans to your favorite dress!</em>
@@ -117,17 +139,30 @@
                     </center>
 
                     <h3>📅 Saturday, June 20th, 2026</h3>
-                    <h4>🎊 Ceremony</h4>
+                    <h4>🎊 Arrive for Refreshments & Ceremony</h4>
                     <p>
-                        <strong>Time:</strong> TBD<br>
+                        <strong>Time:</strong> 3:00 PM<br>
                         <strong>Location:</strong> Terrell Farm<br>
                         <strong>Address:</strong> <a href="https://maps.app.goo.gl/Fh6KUUPf5D9eAmnJ6" target="_blank">3789 Hoover Hill Rd. Trinity, NC 27370</a><br>
-                        <strong>Details:</strong> We will have a Quaker ceremony where everyone is invited to share a few words of love and encouragement. Don't worry, we will share more information about this special type of ceremony soon.
+                        <strong>Details:</strong> We will have a Quaker ceremony where everyone who feels moved is invited to share a few words of love and encouragement.
                     </p>
+                    <div class="dress-code-highlight quaker-ceremony-block">
+                        <button type="button" class="ceremony-toggle-btn" id="ceremonyToggleBtn" aria-expanded="false">
+                            Learn more about the Quaker ceremony ▼
+                        </button>
+                        <div class="ceremony-toggle-content" id="ceremonyToggleContent" hidden>
+                            <p>
+                                The Quaker wedding ceremony is unprogrammed, meaning everyone who feels moved is invited to speak. These messages are often succinct meditations on love, marriage, and commitment. Be yourselves–be joyful or fun or cry your eyes out–but know this is not a time for wild college stories or inside jokes. If you do choose to speak (it is completely optional), there is no expectation that you prepare written remarks; in fact Quakers believe the best messages are spoken from the heart in the inspiration of the moment. In practice it's hard not to think about what you'll say beforehand– that's OK! We just hope the ceremony will feel like a time for honest reflection rather than a chance to take turns giving formal speeches. At the end of the ceremony, all in attendance will sign our marriage certificate to signify the role our community played in the ceremony. We are so grateful that all of you — with the gift of your words and your presence — will surround us with love and make our union official.
+                            </p>
+                            <p>
+                                What drew us to this structure for our wedding–beyond Joseph's religious background–is the democratic ethos of the ceremony: in Quakerism the couple is married not by a single officiant, but by the gathered community. When we were first falling in love, we noticed and admired in each other a mutual focus on staying close, in heart and spirit, to our friends around the country. We believe that our marriage joins not only ourselves and our families but these two national webs of special people. It feels fitting for the structure of our wedding ceremony itself to reflect our shared belief in the importance of this group — all of you! — to the success of our marriage.
+                            </p>
+                        </div>
+                    </div>
 
                     <h4>🎉 Reception</h4>
                     <p>
-                        <strong>Time:</strong> TBD<br>
+                        <strong>Time:</strong> Follows Ceremony<br>
                         <strong>Location:</strong> Same Location<br>
                         <strong>Details:</strong> Dinner, dancing, and celebration to follow!
                     </p>
@@ -144,13 +179,13 @@
                     <h3>📅 Sunday, June 21st, 2026</h3>
                     <h4>🥞 Farewell Brunch</h4>
                     <p>
-                        <strong>Time:</strong> TBD<br>
+                        <strong>Time:</strong> 9:00 AM - 12:00 PM<br>
                         <strong>Location:</strong> TBD<br>
                         <strong>Details:</strong> Join us for a casual brunch<br>
                     </p>
-                    <h4>🥞 High Point RockersBaseball Game</h4>
+                    <h4>⚾ High Point Rockers Baseball Game</h4>
                     <p>
-                        <strong>Time:</strong> 12:00 PM<br>
+                        <strong>Time:</strong> 3:36 PM<br>
                         <strong>Location:</strong> <a href="https://maps.app.goo.gl/2U6qqugHWCoJnUor7" target="_blank">301 N Elm St, High Point, NC 27262</a><br>
                         <strong>Details:</strong> Cheer on the Rockers before you hit the road!<br>
                     </p>
@@ -158,55 +193,6 @@
 
                 </div>
             </section>
-
-            <!-- RSVP SECTION -->
-            <!-- <section id="rsvp">
-                <div class="content-box">
-                    <h2>💌 RSVP</h2>
-                    <p>
-                        Please let us know if you can make it! RSVP by <strong>April 15, 2026</strong>.
-                    </p>
-                    
-                    <div class="form-container">
-                        <form id="rsvpForm">
-                            <label for="name">Your Name(s): *</label><br>
-                            <input type="text" id="name" name="name" required><br><br>
-
-                            <label for="email">Email: *</label><br>
-                            <input type="email" id="email" name="email" required><br><br>
-
-                            <label for="guests">Number of Guests: *</label><br>
-                            <input type="number" id="guests" name="guests" min="1" max="10" value="1" required><br><br>
-
-                            <label>Will you be attending the Friday night welcome reception? *</label><br>
-                            <input type="radio" id="fridayYes" name="fridayAttending" value="Yes" required>
-                            <label for="fridayYes">Yes</label><br>
-                            <input type="radio" id="fridayNo" name="fridayAttending" value="No">
-                            <label for="fridayNo">No</label><br><br>
-
-                            <label>Will you be attending the Saturday ceremony and reception? *</label><br>
-                            <input type="radio" id="saturdayYes" name="saturdayAttending" value="Yes" required>
-                            <label for="saturdayYes">Yes</label><br>
-                            <input type="radio" id="saturdayNo" name="saturdayAttending" value="No">
-                            <label for="saturdayNo">No</label><br><br>
-
-                            <label for="karaoke">Live band karaoke requests for Friday night?<br><span style="font-size: 0.9em; font-style: italic;">(You can sing your favorite song with a top notch backing band like you've always dreamed)</span></label><br>
-                            <textarea id="karaoke" name="karaoke" rows="3"></textarea><br><br>
-
-                            <label for="dietary">Special Requests or Dietary Restrictions:</label><br>
-                            <textarea id="dietary" name="dietary" rows="3"></textarea><br><br>
-
-                            <label>Interested in camping?</label><br>
-                            <input type="radio" id="campingYes" name="camping" value="Yes">
-                            <label for="campingYes">Yes</label><br>
-                            <input type="radio" id="campingNo" name="camping" value="No">
-                            <label for="campingNo">No</label><br>
-
-                            <button type="submit" class="submit-btn">Send RSVP ✨</button>
-                        </form>
-                    </div>
-                </div>
-            </section> -->
 
             <!-- PHOTOS SECTION -->
             <section id="photos">
@@ -235,7 +221,7 @@
                     </p>
                     <ul>
                         <li>
-                            <strong>Spring Hill Suites</strong><br>
+                            <strong><a href="https://www.marriott.com/event-reservations/reservation-link.mi?id=1766076015423&key=GRP&app=resvlink&_branch_match_id=1552701234215581048&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi3OyczLtgdK2ALZZSCOWmaKraG5mZmBuZmBoamJkbFadmqlrXtQgFpdUWpaKlB3Xnp8UlF%2BeXFqka1zRlF%2BbioAumvJnmAAAAA%3D" target="_blank" rel="noopener noreferrer">Spring Hill Suites</a></strong><br>
                             121 Virginia Pl, High Point, NC 27262<br>
                             (336)234-5500<br>
                             <em>Mention "Joseph and Liz's Wedding" for group rate</em>
@@ -266,33 +252,16 @@
                 <div class="content-box">
                     <h2>🎁 Gift Registry</h2>
                     
-                    <div class="under-construction">
-                        <div class="construction-icon">🚧</div>
-                        <h3 class="blink-text">UNDER CONSTRUCTION</h3>
-                        <div class="construction-icon rotate">👷</div>
-                        <p class="construction-message">
-                            Our registry is being built!<br>
-                            Check back soon for details 💕
-                        </p>
-                        <div class="construction-bars">
-                            <div class="bar bar1"></div>
-                            <div class="bar bar2"></div>
-                            <div class="bar bar3"></div>
-                        </div>
-                    </div>
-                    
                     <!-- <p>
-                        Your presence is the best present! But if you'd like to give a gift, 
-                        we're registered at the following places:
+                        Your presence is the best present! But if you'd like to give a gift,
+                        we're registered with Joy.
+                    </p> -->
+                    <p class="registry-cta">
+                        <a href="https://withjoy.com/liz-and-joseph-jun-26/registry" target="_blank" rel="noopener noreferrer" class="registry-link">View our registry →</a>
                     </p>
-                    <ul class="registry-list">
-                        <li>🏠 <a href="#" target="_blank">Target Registry</a></li>
-                        <li>🍽️ <a href="#" target="_blank">Williams Sonoma</a></li>
-                        <li>💰 <a href="#" target="_blank">Honeymoon Fund</a></li>
-                    </ul>
                     <p>
                         <em>Thank you so much for your generosity!</em>
-                    </p> -->
+                    </p>
                 </div>
             </section>
 
@@ -300,7 +269,42 @@
             <section id="local-recommendations">
                 <div class="content-box">
                     <h2>🌟 Local Recommendations</h2>
-                    <p><em>Coming soon...</em></p>
+                    <p><em>What to do in High Point while you're in town!</em></p>
+                    
+                    <div class="local-map-embed">
+                        <div id="localMap"></div>
+                        <p class="map-fallback"><a href="https://www.google.com/maps/search/High+Point+NC" target="_blank" rel="noopener noreferrer">View High Point on Google Maps →</a></p>
+                    </div>
+                    
+                    <h3>🍽️ Food & Drink</h3>
+                    <ul class="local-list">
+                        <li><a href="https://maps.app.goo.gl/giUU6hbYAbsWMi3X6" target="_blank" rel="noopener noreferrer">Brown Truck Brewery</a></li>
+                        <li><a href="https://maps.app.goo.gl/nyuD3zbrHaF9unmA7" target="_blank" rel="noopener noreferrer">Debeen Espresso</a></li>
+                        <li><a href="https://maps.app.goo.gl/g1em2tHbcPEhwxgT7" target="_blank" rel="noopener noreferrer">Congdon Yards</a> (Coffee)</li>
+                        <li><a href="https://maps.app.goo.gl/z4XWFjZ1PEDHdESJ9" target="_blank" rel="noopener noreferrer">Joy Bar</a> (Coffee)</li>
+                        <li><a href="https://maps.app.goo.gl/6mFrVgCZ8SDhAxi96" target="_blank" rel="noopener noreferrer">Stock & Grain</a> (Food Hall)</li>
+                        <li><a href="https://maps.app.goo.gl/j2fSXvaWnuapUpe8A" target="_blank" rel="noopener noreferrer">The Dog House</a> (Best hotdog)</li>
+                        <li><a href="https://maps.app.goo.gl/yJNAWeJYqCxLfDRV7" target="_blank" rel="noopener noreferrer">Biscuit Factory</a> (Best biscuit)</li>
+                        <li><a href="https://maps.app.goo.gl/jVCUaNvd7nvUxmXM6" target="_blank" rel="noopener noreferrer">Alex's House</a> (Best diner)</li>
+                    </ul>
+                    
+                    <h3>🎯 Attractions</h3>
+                    <ul class="local-list">
+                        <li><a href="https://maps.app.goo.gl/Rmwi3oXWyzxSrJEA7" target="_blank" rel="noopener noreferrer">World's Largest Chest of Drawers</a></li>
+                        <li><a href="https://maps.app.goo.gl/FH5uHScwGoa1k4tx7" target="_blank" rel="noopener noreferrer">John Coltrane Statue</a></li>
+                        <li><a href="https://maps.app.goo.gl/ePwQR9bXtrWGJSFJ8" target="_blank" rel="noopener noreferrer">Boyhood Home of John Coltrane</a></li>
+                        <li><a href="https://maps.app.goo.gl/jbsLVdr1GTwZA5Vr5" target="_blank" rel="noopener noreferrer">Boyhood Home of Joseph Terrell</a></li>
+                        <li><a href="https://maps.app.goo.gl/Kwh75z3roerhiXwf8" target="_blank" rel="noopener noreferrer">High Point Museum</a> (See John Coltrane's piano and flute)</li>
+                        <li><a href="https://maps.app.goo.gl/7XkUq6ByPUw2Nu756" target="_blank" rel="noopener noreferrer">Armstrong Park</a> (High Point Greenway)</li>
+                    </ul>
+                    
+                    <h3>🪑 Furniture & Antiques</h3>
+                    <ul class="local-list">
+                        <li><a href="https://maps.app.goo.gl/34FEvYFokyrKUDMeA" target="_blank" rel="noopener noreferrer">TinkerSmiths Trading Co</a></li>
+                        <li><a href="https://maps.app.goo.gl/Z6rGZkSJRGfof5T16" target="_blank" rel="noopener noreferrer">Chelsea on Green</a></li>
+                        <li><a href="https://maps.app.goo.gl/2WiXXw9KX3gBNjWK9" target="_blank" rel="noopener noreferrer">Boxwood Antique Market</a></li>
+                        <li><a href="https://maps.app.goo.gl/2gccywMwD79Gjuvu8" target="_blank" rel="noopener noreferrer">Golden Oldies Antiques</a></li>
+                    </ul>
                 </div>
             </section>
 
@@ -378,6 +382,9 @@
 
     </div>
 
+    <!-- JUMP TO TOP (mobile only) -->
+    <button type="button" class="jump-to-top hidden" id="jumpToTop" aria-label="Scroll to top">↑</button>
+
     <!-- FOOTER -->
     <footer>
         <p>
@@ -430,7 +437,52 @@
         }
     </script>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
     <script src="script.js"></script>
+    <script>
+        // Local recommendations map with markers
+        document.addEventListener('DOMContentLoaded', function() {
+            const mapEl = document.getElementById('localMap');
+            if (!mapEl) return;
+            const map = L.map('localMap').setView([35.96, -80.01], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
+            const places = [
+                { lat: 35.9709, lng: -80.0159, name: 'Brown Truck Brewery', url: 'https://maps.app.goo.gl/giUU6hbYAbsWMi3X6', cat: 'food' },
+                { lat: 35.97445, lng: -80.03327, name: 'DeBeen Espresso', url: 'https://maps.app.goo.gl/nyuD3zbrHaF9unmA7', cat: 'food' },
+                { lat: 35.958, lng: -80.0099, name: 'Congdon Yards', url: 'https://maps.app.goo.gl/g1em2tHbcPEhwxgT7', cat: 'food' },
+                { lat: 35.9706, lng: -80.0159, name: 'Joy Bar', url: 'https://maps.app.goo.gl/z4XWFjZ1PEDHdESJ9', cat: 'food' },
+                { lat: 35.9594, lng: -80.0102, name: 'Stock & Grain', url: 'https://maps.app.goo.gl/6mFrVgCZ8SDhAxi96', cat: 'food' },
+                { lat: 35.9622, lng: -80.0094, name: 'The Dog House', url: 'https://maps.app.goo.gl/j2fSXvaWnuapUpe8A', cat: 'food' },
+                { lat: 35.9829, lng: -80.0212, name: 'Biscuit Factory', url: 'https://maps.app.goo.gl/yJNAWeJYqCxLfDRV7', cat: 'food' },
+                { lat: 35.9712, lng: -80.0164, name: "Alex's House", url: 'https://maps.app.goo.gl/jVCUaNvd7nvUxmXM6', cat: 'food' },
+                { lat: 35.9636, lng: -80.0083, name: "World's Largest Chest of Drawers", url: 'https://maps.app.goo.gl/Rmwi3oXWyzxSrJEA7', cat: 'attraction' },
+                { lat: 35.9554, lng: -80.007, name: 'John Coltrane Statue', url: 'https://maps.app.goo.gl/FH5uHScwGoa1k4tx7', cat: 'attraction' },
+                { lat: 35.9629, lng: -79.9937, name: 'Boyhood Home of John Coltrane', url: 'https://maps.app.goo.gl/ePwQR9bXtrWGJSFJ8', cat: 'attraction' },
+                { lat: 35.963, lng: -79.994, name: 'Boyhood Home of Joseph Terrell', url: 'https://maps.app.goo.gl/jbsLVdr1GTwZA5Vr5', cat: 'attraction' },
+                { lat: 35.9797, lng: -79.991, name: 'High Point Museum', url: 'https://maps.app.goo.gl/Kwh75z3roerhiXwf8', cat: 'attraction' },
+                { lat: 35.9698, lng: -80.0088, name: 'Armstrong Park', url: 'https://maps.app.goo.gl/7XkUq6ByPUw2Nu756', cat: 'attraction' },
+                { lat: 35.9396, lng: -79.9975, name: 'TinkerSmiths Trading Co', url: 'https://maps.app.goo.gl/34FEvYFokyrKUDMeA', cat: 'furniture' },
+                { lat: 35.9529, lng: -80.0105, name: 'Chelsea on Green', url: 'https://maps.app.goo.gl/Z6rGZkSJRGfof5T16', cat: 'furniture' },
+                { lat: 35.9637, lng: -80.0085, name: 'Boxwood Antique Market', url: 'https://maps.app.goo.gl/2WiXXw9KX3gBNjWK9', cat: 'furniture' },
+                { lat: 35.9569, lng: -80.0083, name: 'Golden Oldies Antiques', url: 'https://maps.app.goo.gl/2gccywMwD79Gjuvu8', cat: 'furniture' }
+            ];
+            const catIcons = { food: '🍽️', attraction: '🎯', furniture: '🪑' };
+            const bounds = L.latLngBounds();
+            places.forEach(function(p) {
+                const icon = L.divIcon({
+                    html: '<span style="font-size:20px;line-height:1">' + (catIcons[p.cat] || '📍') + '</span>',
+                    className: 'custom-marker',
+                    iconSize: [24, 24]
+                });
+                const marker = L.marker([p.lat, p.lng], { icon: icon }).addTo(map);
+                marker.bindPopup('<strong>' + p.name + '</strong><br><a href="' + p.url + '" target="_blank" rel="noopener">Get directions →</a>');
+                bounds.extend([p.lat, p.lng]);
+            });
+            map.fitBounds(bounds, { padding: [30, 30], maxZoom: 14 });
+        });
+    </script>
 </body>
 </html>
 
